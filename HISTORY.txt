@@ -1,0 +1,5 @@
+0.0.1 (2013-08-12)
+=====
+
+* Initial controller on /data (no real functionality)
+* can be mounted from dbd_demo

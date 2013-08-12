@@ -9,6 +9,7 @@ module DbdDataEngine
     end
 
     def new
+      @predicates = ['schema:givenName','schema:familyName']
     end
 
     def create

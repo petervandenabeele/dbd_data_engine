@@ -1,2 +1,12 @@
-%h1 Data#new
-%p Find me in app/views/dbd_data_engine/data/new.html.haml
+%h1 Insert new data
+
+%h2 Create a new resource
+
+%table
+  %tr
+    %th predicate
+    %th object
+  %tr
+    %td= select_tag('predicate', options_for_select(@predicates))
+    %td= text_field_tag('object')
+
