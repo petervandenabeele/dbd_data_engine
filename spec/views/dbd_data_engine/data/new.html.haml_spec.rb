@@ -3,9 +3,10 @@ require 'spec_helper'
 describe 'dbd_data_engine/data/new.html.haml' do
   context 'renders' do
 
-    before(:each) {
+    before(:each) do
       @predicates = ['schema:givenName', 'schema:familyName']
-      render }
+      render
+    end
 
     it 'without exceptions' do
       #should_not raise_error
@@ -21,6 +22,10 @@ describe 'dbd_data_engine/data/new.html.haml' do
 
     it 'has a drop down select box with predicates' do
       rendered.should have_select('predicate', options: ['schema:givenName', 'schema:familyName'])
+    end
+
+    it 'has a submit button' do
+      rendered.should have_button('Submit')
     end
   end
 end
