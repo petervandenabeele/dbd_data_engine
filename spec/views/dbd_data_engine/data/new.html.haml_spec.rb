@@ -12,12 +12,12 @@ describe 'dbd_data_engine/data/new.html.haml' do
       #should_not raise_error
     end
 
-    it 'talks about predicate' do
-      rendered.should match(/predicate/i)
+    it 'has table header "predicate"' do
+      rendered.should have_xpath('.//table/tr/th', :text => 'predicate')
     end
 
-    it 'talks about object' do
-      rendered.should match(/object/i)
+    it 'has table header "object"' do
+      rendered.should have_xpath('.//table/tr/th', :text => 'object')
     end
 
     it 'has a drop down select box with predicates' do
@@ -26,6 +26,10 @@ describe 'dbd_data_engine/data/new.html.haml' do
 
     it 'has a submit button' do
       rendered.should have_button('Submit')
+    end
+
+    it 'has a form that posts to /data/' do
+      rendered.should have_xpath('.//form[@action="/data"][@method="post"]', :text => 'predicate')
     end
   end
 end
