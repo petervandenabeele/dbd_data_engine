@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'dbd_data_engine/data/new.html.haml' do
+describe 'dbd_data_engine/resources/new.html.haml' do
   context 'renders' do
 
     before(:each) do
@@ -28,8 +28,8 @@ describe 'dbd_data_engine/data/new.html.haml' do
       rendered.should have_button('Submit')
     end
 
-    it 'has a form that posts to /data/' do
-      rendered.should have_xpath('.//form[@action="/data"][@method="post"]', :text => 'predicate')
+    it 'has a form that posts to /data/resources' do
+      rendered.should have_xpath('.//form[@action="/data/resources"][@method="post"]', :text => 'predicate')
     end
   end
 end

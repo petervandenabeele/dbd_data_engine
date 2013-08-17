@@ -1,8 +1,6 @@
-%h1 Insert new data
+%h1 Create a new resource
 
-%h2 Create a new resource
-
-= form_tag('/data', method: :post) do # engine controller route not loaded in view tests
+= form_tag('/data/resources', method: :post) do # engine controller route not loaded in view tests
   %table
     %tr
       %th predicate

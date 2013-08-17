@@ -1,5 +1,6 @@
 DbdDataEngine::Engine.routes.draw do
-  resource 'data', only: [:new, :create]
-  get 'data/' => 'data#index', as: :data_index
-  get 'data/:id' => 'data#show', as: :data_show
+  resources 'data', only: [:index]
+  scope 'data' do
+    resources 'resources', only: [:index, :new, :create]
+  end
 end

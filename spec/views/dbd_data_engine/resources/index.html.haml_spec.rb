@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'dbd_data_engine/data/create.html.haml' do
+describe 'dbd_data_engine/resources/index.html.haml' do
   it 'renders' do
     render
   end
