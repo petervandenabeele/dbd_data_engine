@@ -11,6 +11,6 @@ module DbdDataEngine
   end
 
   def self.default_CSV_location
-    'tmp/graph.csv'
+    'data/graph.csv'
   end
 end

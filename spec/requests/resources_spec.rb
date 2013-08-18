@@ -11,11 +11,12 @@ module DbdDataEngine
 
       context 'creating the resource from parameters' do
 
-        let(:test_filename) { 'tmp/test_graph.csv' }
+        let(:test_filename) { 'data/test_graph.csv' }
         let(:one_fact) do
           {"predicate" => ["schema:givenName"], "object" => ["P"]}
         end
 
+        before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
 
         describe 'with correct parameters' do
           it 'with correct data does_not raise_error' do
