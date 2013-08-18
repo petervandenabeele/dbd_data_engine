@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module DbdDataEngine
-  describe 'Resources' do
+  describe ResourcesController do
     describe 'GET /data/resources' do
       context 'routing' do
         it 'resources_path is correct' do
