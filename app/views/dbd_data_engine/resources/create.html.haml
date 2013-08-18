@@ -1,3 +1,9 @@
-%h1 Resources#create
-%p Find me in app/views/dbd_data_engine/resources/create.html.haml
-%p params where #{params.inspect}
+%h2 New resource was created
+
+%p content is:
+%table
+  %tr
+    %th predicate
+    %th object
+  =render :partial => 'fact', collection: @resource.to_a
+

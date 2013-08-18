@@ -13,7 +13,7 @@ module DbdDataEngine
 
         let(:test_filename) { 'data/test_graph.csv' }
         let(:one_fact) do
-          {"predicate" => ["schema:givenName"], "object" => ["P"]}
+          {"predicate" => ["schema:givenName"], "object" => ["Peter"]}
         end
 
         before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
@@ -30,14 +30,25 @@ module DbdDataEngine
 
           context 'with 1 line, creates 1 resource' do
 
-            it 'adds 1 line to the graph' do
-              DbdDataEngine.stub(:default_CSV_location).and_return(test_filename)
+            before(:each) do
               Dbd::Graph.new.to_CSV_file(test_filename) # empty the file
-              post(dbd_data_engine.resources_path, one_fact)
-              graph = File.open(test_filename) do |f|
+            end
+
+            def read_back_graph
+              File.open(test_filename) do |f|
                 Dbd::Graph.new.from_CSV(f)
               end
-              graph.size.should == 1
+            end
+
+            it 'adds 1 line to the graph' do
+              post(dbd_data_engine.resources_path, one_fact)
+              read_back_graph.size.should == 1
+            end
+
+            it 'shows the result' do
+              post(dbd_data_engine.resources_path, one_fact)
+              expect(response.body).to include('schema:givenName')
+              expect(response.body).to include('Peter')
             end
           end
         end
