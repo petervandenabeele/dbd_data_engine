@@ -38,8 +38,12 @@ module DbdDataEngine
           expect(page.text).to match(/new resource/i)
         end
 
-        it 'has a select box with schema:givenName as option' do
-          expect(page).to have_select('predicate', options: ['schema:givenName','schema:familyName'])
+        it 'has a select box array with schema:givenName as option' do
+          expect(page).to have_select('predicate[]', options: ['schema:givenName','schema:familyName'])
+        end
+
+        it 'has a field array' do
+          expect(page).to have_field('object[]')
         end
       end
     end

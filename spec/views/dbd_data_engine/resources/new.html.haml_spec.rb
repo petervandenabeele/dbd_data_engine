@@ -20,8 +20,12 @@ describe 'dbd_data_engine/resources/new.html.haml' do
       rendered.should have_xpath('.//table/tr/th', :text => 'object')
     end
 
-    it 'has a drop down select box with predicates' do
-      rendered.should have_select('predicate', options: ['schema:givenName', 'schema:familyName'])
+    it 'has an array of drop down select boxes with predicates' do
+      rendered.should have_select('predicate[]', options: ['schema:givenName', 'schema:familyName'])
+    end
+
+    it 'has an array of fields with objects' do
+      rendered.should have_field('object[]')
     end
 
     it 'has a submit button' do
