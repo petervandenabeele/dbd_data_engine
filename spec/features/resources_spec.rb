@@ -47,13 +47,5 @@ module DbdDataEngine
         end
       end
     end
-
-    describe 'POST /data/resources' do
-      context 'routing' do
-        it 'resources_path is correct' do
-          dbd_data_engine.resources_path.should == '/data/resources'
-        end
-      end
-    end
   end
 end

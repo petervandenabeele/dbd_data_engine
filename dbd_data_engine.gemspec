@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_dependency 'rails', '>= 4.0.0'
   s.add_dependency 'haml'
+  s.add_dependency 'dbd'
 
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'

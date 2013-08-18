@@ -9,4 +9,8 @@ module DbdDataEngine
       g.template_engine :haml
     end
   end
+
+  def self.default_CSV_location
+    'tmp/graph.csv'
+  end
 end
