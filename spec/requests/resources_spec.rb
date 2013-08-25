@@ -23,6 +23,11 @@ module DbdDataEngine
            'object' => ['Peter', 'Vandenabeele']}
         end
 
+        let(:two_other_facts) do
+          {'predicate' => ['schema:givenName', 'schema:familyName'],
+           'object' => ['Frans', 'VDA']}
+        end
+
         before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
 
         describe 'with correct parameters' do
@@ -47,31 +52,64 @@ module DbdDataEngine
 
           context 'with 1 line, creates 1 resource' do
 
+            before(:each) { post(dbd_data_engine.resources_path, one_fact) }
+
             it 'adds 1 line to the graph' do
-              post(dbd_data_engine.resources_path, one_fact)
               read_back_graph.size.should == 1
             end
 
             it 'shows the result' do
-              post(dbd_data_engine.resources_path, one_fact)
               expect(response.body).to include('schema:givenName')
               expect(response.body).to include('Peter')
             end
           end
 
-          context 'with 2 lines, creates 2 resources' do
+          context 'with 2 lines, creates resource with 2 facts' do
+
+            before(:each) { post(dbd_data_engine.resources_path, two_facts) }
 
             it 'adds 2 lines to the graph' do
-              post(dbd_data_engine.resources_path, two_facts)
               read_back_graph.size.should == 2
             end
 
+            it 'the 2 facts have the same subject (1 resource)' do
+              read_back_graph.map(&:subject).uniq.size.should == 1
+            end
+
             it 'shows the result' do
+              expect(response.body).to include('schema:givenName')
+              expect(response.body).to include('Peter')
+              expect(response.body).to include('schema:familyName')
+              expect(response.body).to include('Vandenabeele')
+            end
+          end
+
+          context 'with 2 submits of 2 lines, creates 2 resources' do
+            context 'submits directly after each other' do
+
+              before(:each) do
+                post(dbd_data_engine.resources_path, two_facts)
+                post(dbd_data_engine.resources_path, two_other_facts)
+              end
+
+              it 'adds 4 lines to the graph in the file' do
+                read_back_graph.size.should == 4
+              end
+
+              it 'the 4 facts are of 2 resources' do
+                read_back_graph.map(&:subject).uniq.size.should == 2
+              end
+            end
+
+            it 'shows the results for each submit' do
               post(dbd_data_engine.resources_path, two_facts)
               expect(response.body).to include('schema:givenName')
               expect(response.body).to include('Peter')
               expect(response.body).to include('schema:familyName')
               expect(response.body).to include('Vandenabeele')
+              post(dbd_data_engine.resources_path, two_other_facts)
+              expect(response.body).to include('Frans')
+              expect(response.body).to include('VDA')
             end
           end
         end

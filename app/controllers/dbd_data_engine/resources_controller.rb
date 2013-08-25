@@ -18,7 +18,18 @@ module DbdDataEngine
         @resource << fact
       end
       graph << @resource
-      graph.to_CSV_file(DbdDataEngine.default_CSV_location)
+      #graph.to_CSV_file(filename)
+      new_data = graph.to_CSV
+      File.open(filename, 'a') do |f|
+        f.puts new_data
+      end
     end
+
+  private
+
+    def filename
+      DbdDataEngine.default_CSV_location
+    end
+
   end
 end
