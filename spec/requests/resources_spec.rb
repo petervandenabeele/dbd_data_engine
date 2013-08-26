@@ -45,9 +45,7 @@ module DbdDataEngine
           end
 
           def read_back_graph
-            File.open(test_filename) do |f|
-              Dbd::Graph.new.from_CSV(f)
-            end
+            Dbd::Graph.new.from_unsorted_CSV_file(test_filename)
           end
 
           context 'with 1 line, creates 1 resource' do
@@ -110,6 +108,19 @@ module DbdDataEngine
               post(dbd_data_engine.resources_path, two_other_facts)
               expect(response.body).to include('Frans')
               expect(response.body).to include('VDA')
+            end
+          end
+
+          context 'with multi-threaded requests does a clean write' do
+            it 'does not fail on parallel access (also tested on 1000.times)' do
+              threads = []
+              [two_facts, two_other_facts].each do |resource|
+                threads << Thread.new(resource) do |_resource|
+                  10.times { post(dbd_data_engine.resources_path, _resource) }
+                end
+              end
+              threads.each { |thread| thread.join }
+              read_back_graph
             end
           end
         end

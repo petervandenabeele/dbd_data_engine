@@ -18,10 +18,9 @@ module DbdDataEngine
         @resource << fact
       end
       graph << @resource
-      #graph.to_CSV_file(filename)
       new_data = graph.to_CSV
       File.open(filename, 'a') do |f|
-        f.puts new_data
+        f.syswrite new_data
       end
     end
 
