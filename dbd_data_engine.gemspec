@@ -23,8 +23,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_dependency 'rails', '>= 4.0.0'
   s.add_dependency 'haml'
-  s.add_dependency 'dbd', '>= 0.0.16'
-  s.add_dependency 'rubyzip', '= 0.9.7'
+  s.add_dependency 'dbd', '>= 0.0.17'
+  s.add_dependency 'rubyzip'
 
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'
