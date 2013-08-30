@@ -3,3 +3,14 @@
 
 * Initial controller on /data (no real functionality)
 * can be mounted from dbd_demo
+
+0.0.2 (2013-08-26)
+=====
+
+* add ../data/resources (index, new, create)
+
+0.0.3 (2013-08-30)
+=====
+
+* allow_failures for jruby-head
+* force rubyzip dep to 0.9.7 (through neography)
