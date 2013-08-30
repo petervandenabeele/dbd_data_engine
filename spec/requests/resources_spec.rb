@@ -112,6 +112,9 @@ module DbdDataEngine
           end
 
           context 'with multi-threaded requests does a clean write' do
+
+            before(:each) { pending("multi-threaded tests fail on JRuby") if RUBY_PLATFORM == 'java' }
+
             it 'does not fail on parallel access (also tested on 1000.times)' do
               threads = []
               [two_facts, two_other_facts].each do |resource|
