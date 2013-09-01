@@ -9,8 +9,8 @@ guard 'rspec', :all_on_start => true, :all_after_pass => true do
   watch(%r{^app/controllers/dbd_data_engine/(.+)_(controller)\.rb$})  do |m|
     ["spec/routing/#{m[1]}_routing_spec.rb",
      "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb",
-     "spec/features/#{m[1]}_spec.rb",
-     "spec/requests/#{m[1]}_spec.rb"]
+     "spec/features/#{m[1]}",
+     "spec/requests/#{m[1]}"]
   end
   watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
   watch('config/routes.rb')                           { "spec/routing" }
