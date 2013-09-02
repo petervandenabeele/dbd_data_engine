@@ -4,7 +4,7 @@ describe 'dbd_data_engine/contexts/new.html.haml' do
   context 'renders' do
 
     before(:each) do
-      @predicates = ['schema:givenName', 'schema:familyName']
+      @predicates = DbdDataEngine::Context.predicates
       render
     end
 
@@ -21,7 +21,7 @@ describe 'dbd_data_engine/contexts/new.html.haml' do
     end
 
     it 'has an array of drop down select boxes with predicates' do
-      rendered.should have_select('predicate[]', options: ['schema:givenName', 'schema:familyName'])
+      rendered.should have_field('predicate[]')
     end
 
     it 'has an array of fields with objects' do

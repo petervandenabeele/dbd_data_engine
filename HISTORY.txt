@@ -19,3 +19,10 @@
 =====
 
 * force dbd >= 0.0.17 (uses neography 1.1.3 that fixes the rubyzip issue)
+
+0.0.5 (2013-09-02)
+=====
+
+* add a naive DbdDataEngine::Context model
+* add a naive ContextsController
+* it takes the predicates for the "new" screen from DbdOnto::Context
