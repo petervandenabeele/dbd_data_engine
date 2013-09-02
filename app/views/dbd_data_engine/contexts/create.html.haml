@@ -1,0 +1,9 @@
+%h2 New context was created
+
+%p content is:
+%table
+  %tr
+    %th predicate
+    %th object
+  =render :partial => 'context_fact', collection: @context.to_a
+

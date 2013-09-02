@@ -1,11 +1,11 @@
 require_dependency "dbd_data_engine/application_controller"
 
 module DbdDataEngine
-  class ResourcesController < ApplicationController
+  class ContextsController < ApplicationController
     def index
       graph = Dbd::Graph.new
       graph = graph.from_unsorted_CSV_file(filename)
-      @resources = graph.subjects.map{ |s| graph.by_subject(s) }
+      @contexts = graph.subjects.map{ |s| graph.by_subject(s) }
     end
 
     def new
@@ -14,13 +14,13 @@ module DbdDataEngine
 
     def create
       graph = Dbd::Graph.new
-      @resource = Dbd::Resource.new(context_subject: Dbd::Context.new_subject)
+      @context = Dbd::Context.new()
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
-        fact = Dbd::Fact.new(predicate: predicate,
-                             object:    object)
-        @resource << fact
+        context_fact = Dbd::ContextFact.new(predicate: predicate,
+                                            object:    object)
+        @context << context_fact
       end
-      graph << @resource
+      graph << @context
       new_data = graph.to_CSV
       File.open(filename, 'a') do |f|
         f.syswrite new_data
