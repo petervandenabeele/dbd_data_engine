@@ -3,6 +3,9 @@ require_dependency "dbd_data_engine/application_controller"
 module DbdDataEngine
   class ResourcesController < ApplicationController
     def index
+      graph = Dbd::Graph.new
+      graph = graph.from_unsorted_CSV_file(filename)
+      @resources = graph.subjects.map{ |s| graph.by_subject(s) }
     end
 
     def new

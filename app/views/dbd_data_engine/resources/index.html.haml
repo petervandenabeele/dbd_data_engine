@@ -1,2 +1,4 @@
 %h1 Resources#index
-%p Find me in app/views/dbd_data_engine/resources/index.html.haml
+
+- @resources.each do |resource|
+  = render partial: 'resource', object: resource
