@@ -14,5 +14,4 @@ describe 'dbd_data_engine/data/index.html.haml' do
     render
     rendered.should match(%r{<a href="/data/contexts">contexts</a>})
   end
-
 end

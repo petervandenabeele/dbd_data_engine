@@ -3,11 +3,12 @@
 = form_tag('/data/contexts', method: :post) do # engine controller route not loaded in view tests
   %table
     %tr
-      %th predicate
-      %th object
+      %th Predicate
+      %th Object
     - @predicates.each do |predicate|
       %tr
-        %td= text_field_tag('predicate[]', predicate)
+        %td= label_tag("#{predicate[:label]} (#{predicate[:predicate]})")
         %td= text_field_tag('object[]')
+        %td= text_field_tag('predicate[]', predicate[:predicate], hidden: true)
 
   %p= submit_tag('Submit')

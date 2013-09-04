@@ -2,6 +2,7 @@ require 'spec_helper'
 
 module DbdDataEngine
   describe Context do
+
     let(:context_predicates) {
       ['context:visibility',
        'context:encryption',
@@ -10,8 +11,20 @@ module DbdDataEngine
        'dc:creator',
        'dcterms:created']}
 
+    let(:context_labels) {
+      ['Visibility',
+       'Encryption',
+       'License',
+       'Source',
+       'Creator',
+       'Created']}
+
     it 'has all the context predicates' do
-      described_class.predicates.should == context_predicates
+      described_class.predicates.map{ |p| p[:predicate] }.should == context_predicates
+    end
+
+    it 'has all the context labels' do
+      described_class.predicates.map{ |p| p[:label] }.should == context_labels
     end
   end
 end

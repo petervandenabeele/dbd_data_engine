@@ -19,11 +19,15 @@ module DbdDataEngine
           expect(page.text).to match(/new context/i)
         end
 
-        it 'has a label array with context:visibility as value' do
+        it 'has a field array with predicates' do
           expect(page).to have_field('predicate[]', type: 'text', count: 6)
         end
 
-        it 'has a field array' do
+        it 'has a field array with predicate context:visibility' do
+          expect(page).to have_field('predicate[]', type: 'text', with: 'context:visibility')
+        end
+
+        it 'has a field array with objects' do
           expect(page).to have_field('object[]', count: 6)
         end
       end
