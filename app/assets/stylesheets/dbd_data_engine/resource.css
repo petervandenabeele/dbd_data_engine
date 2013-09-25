@@ -1,0 +1,12 @@
+.resource table {
+    margin: 5px;
+    border: 1px solid #333;
+    color: darkgreen;
+    border-collapse:collapse;
+}
+
+.resource td {
+    padding: 2px;
+    border: 1px dotted #888;
+    color: darkred;
+}

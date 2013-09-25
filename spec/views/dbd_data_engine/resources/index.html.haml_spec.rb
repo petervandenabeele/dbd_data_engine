@@ -13,4 +13,8 @@ describe 'dbd_data_engine/resources/index.html.haml' do
   it 'renders the resource partial' do
     render.should render_template(partial: '_resource')
   end
+
+  it 'renders the div class resource' do
+    render.should have_css('div[class=resource]')
+  end
 end
