@@ -5,7 +5,8 @@ module DbdDataEngine
     def index
       graph = Dbd::Graph.new
       graph = graph.from_unsorted_CSV_file(filename)
-      @resources = graph.subjects.map{ |s| graph.by_subject(s) }
+      # TODO move this to the Dbd::Graph#contexts
+      @resources = graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
     end
 
     def new

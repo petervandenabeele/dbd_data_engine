@@ -13,11 +13,8 @@ module DbdDataEngine
       ::RSpec::Mocks.setup(self)
 
       before(:each) do
-        graph = Dbd::Graph.new
-        graph << Dbd::ContextFact.new(subject: Dbd::Fact.factory.new_subject,
-                          predicate: 'foobar',
-                          object: 'tuxping')
-        Dbd::Graph.any_instance.stub(:from_unsorted_CSV_file).and_return(graph)
+        Dbd::Graph.any_instance.stub(:from_unsorted_CSV_file).
+          and_return(TestFactories::Graph.full)
       end
 
       context 'page content' do
@@ -30,9 +27,14 @@ module DbdDataEngine
           expect(page).to have_text('Resources')
         end
 
+        it 'does not show Contexts (alleen Facts)' do
+          expect(page).to_not have_text('foobar')
+          expect(page).to_not have_text('tuxping')
+        end
+
         it 'shows a test resource' do
-          expect(page).to have_text('foobar')
-          expect(page).to have_text('tuxping')
+          expect(page).to have_text('fact_predicate')
+          expect(page).to have_text('whooha')
         end
       end
     end

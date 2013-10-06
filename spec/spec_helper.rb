@@ -5,6 +5,9 @@ require 'rspec/rails'
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+# Load TestFactories
+Dir["#{File.dirname(__FILE__)}/test_factories/*.rb"].each { |f| require f }
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
