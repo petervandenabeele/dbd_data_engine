@@ -3,8 +3,10 @@ require 'ostruct'
 
 describe 'dbd_data_engine/resources/create.html.haml' do
   it 'renders' do
-    a = OpenStruct.new(predicate: 'foo', object: 'bar')
-    @resource = [a]
+    fact = OpenStruct.new(predicate: 'foo', object: 'bar')
+    context_fact = OpenStruct.new(predicate: 'tux', object: 'ping')
+    @resource = [fact]
+    @context = [context_fact]
     render
   end
 end

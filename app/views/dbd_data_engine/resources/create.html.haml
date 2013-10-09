@@ -1,9 +1,13 @@
 %h2 New resource was created
 
-%p content is:
+%h3 context:
+%p
+  =render partial: 'dbd_data_engine/contexts/context', object: @context.to_a
+
+%h3 resource:
 %table
   %tr
     %th predicate
     %th object
-  =render :partial => 'fact', collection: @resource.to_a
+  =render partial: 'fact', collection: @resource.to_a
 
