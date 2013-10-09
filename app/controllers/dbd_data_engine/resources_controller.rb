@@ -10,6 +10,7 @@ module DbdDataEngine
     end
 
     def new
+      @contexts = ['public today', 'personal today', 'business today']
       @predicates = ['schema:givenName','schema:familyName']
     end
 

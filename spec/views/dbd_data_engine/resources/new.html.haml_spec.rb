@@ -4,6 +4,7 @@ describe 'dbd_data_engine/resources/new.html.haml' do
   context 'renders' do
 
     before(:each) do
+      @contexts = ['a', 'b']
       @predicates = ['schema:givenName', 'schema:familyName']
       render
     end
@@ -13,15 +14,19 @@ describe 'dbd_data_engine/resources/new.html.haml' do
     end
 
     it 'has table header "predicate"' do
-      rendered.should have_xpath('.//table/tr/th', :text => 'predicate')
+      rendered.should have_css('table>tr>th', text: 'predicate')
     end
 
     it 'has table header "object"' do
-      rendered.should have_xpath('.//table/tr/th', :text => 'object')
+      rendered.should have_css('table>tr>th', text: 'object')
     end
 
     it 'has an array of drop down select boxes with predicates' do
       rendered.should have_select('predicate[]', options: ['schema:givenName', 'schema:familyName'])
+    end
+
+    it 'has a select box with contexts' do
+      rendered.should have_select('context', options: ['a', 'b'])
     end
 
     it 'has an array of fields with objects' do
@@ -33,7 +38,7 @@ describe 'dbd_data_engine/resources/new.html.haml' do
     end
 
     it 'has a form that posts to /data/resources' do
-      rendered.should have_xpath('.//form[@action="/data/resources"][@method="post"]', :text => 'predicate')
+      rendered.should have_css('form[@action="/data/resources"][@method="post"]', text: 'predicate')
     end
   end
 end
