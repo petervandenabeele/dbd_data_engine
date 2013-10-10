@@ -19,17 +19,26 @@ module DbdDataEngine
       context_from_context_facts(business_today_context_facts)
     end
 
+    def self.default_from_params(context_param, current_graph)
+      if found_context = find_context(context_param, current_graph)
+        return found_context
+      end
+      create_context(context_param)
+    end
+
   private
 
-    def self.context_from_context_facts(context_fact_array)
-      Dbd::Context.new.tap do |context|
-        context_fact_array.each do |predicate, object|
-          context << Dbd::ContextFact.new(predicate: predicate, object: object)
+    def self.find_context(context_param, current_graph)
+      if current_graph
+        # the first occurrence is OK (no drama if multiple)
+        contexts(current_graph).detect do |context|
+          single_fact_on_predicate(context, 'context:visibility').object == visibility(context_param) &&
+          single_fact_on_predicate(context, 'dcterms:created').object == today.to_s
         end
       end
     end
 
-    def self.default_from_params(context_param)
+    def self.create_context(context_param)
       case context_param
         when 'public today'
           public_today
@@ -42,8 +51,23 @@ module DbdDataEngine
       end
     end
 
+    def self.visibility(context_param)
+      context_param.split(/ /).first
+    end
+
+    def self.today
+      Date.today
+    end
+
+    def self.context_from_context_facts(context_fact_array)
+      Dbd::Context.new.tap do |context|
+        context_fact_array.each do |predicate, object|
+          context << Dbd::ContextFact.new(predicate: predicate, object: object)
+        end
+      end
+    end
+
     def self.public_today_context_facts
-      today = Date.today
       {'context:visibility' => 'public',
        'context:encryption' => 'clear',
        'context:license' => "CC BY, Copyright #{today.year} Peter Vandenabeele",
@@ -53,7 +77,6 @@ module DbdDataEngine
     end
 
     def self.personal_today_context_facts
-      today = Date.today
       {'context:visibility' => 'personal',
        'context:encryption' => 'encrypted',
        'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
@@ -63,7 +86,6 @@ module DbdDataEngine
     end
 
     def self.business_today_context_facts
-      today = Date.today
       {'context:visibility' => 'business',
        'context:encryption' => 'encrypted',
        'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
@@ -72,7 +94,20 @@ module DbdDataEngine
        'dcterms:created' => today.to_s}
     end
 
-    # TODO implement these methods on Dbd gem to clean-up
+    # TODO implement some of these methods on Dbd gem to clean-up
+
+    def self.contexts(graph)
+      graph.subjects.
+        map do |subject|
+          graph.by_subject(subject)
+        end.
+        select do |facts|
+          facts.first.class == Dbd::ContextFact
+        end.
+        map do |facts|
+          Dbd::Context.new(subject: facts.first.subject) << facts
+        end
+    end
 
     def self.to_resources(context)
       context.subjects.map do |subject|

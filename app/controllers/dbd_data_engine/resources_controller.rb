@@ -3,10 +3,7 @@ require_dependency "dbd_data_engine/application_controller"
 module DbdDataEngine
   class ResourcesController < ApplicationController
     def index
-      graph = Dbd::Graph.new
-      graph = graph.from_unsorted_CSV_file(filename)
-      # TODO move this to the Dbd::Graph#resources
-      @resources = graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
+      @resources =  resources(current_graph)
     end
 
     def new
@@ -15,18 +12,19 @@ module DbdDataEngine
     end
 
     def create
-      graph = Dbd::Graph.new
-      @context = Context.default_from_params(params[:context])
+      @context = Context.default_from_params(params[:context], current_graph)
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
         fact = Dbd::Fact.new(predicate: predicate, object:    object)
         @resource << fact
       end
-      graph << @context << @resource
+      append_graph = Dbd::Graph.new
+      append_graph << @context unless @context.first.time_stamp # only if not yet persisted?
+      append_graph << @resource
       # TODO this can probably move to Dbd::Graph#append_to_file(filename)
-      new_data = graph.to_CSV
+      append_csv = append_graph.to_CSV
       File.open(filename, 'a') do |f|
-        f.syswrite new_data
+        f.syswrite append_csv
       end
     end
 
@@ -34,6 +32,15 @@ module DbdDataEngine
 
     def filename
       DbdDataEngine.default_CSV_location
+    end
+
+    def current_graph
+      Dbd::Graph.new.from_unsorted_CSV_file(filename)
+    end
+
+    # TODO move this to the Dbd::Graph#resources
+    def resources(graph)
+      graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
     end
   end
 end
