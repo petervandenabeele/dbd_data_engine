@@ -43,7 +43,7 @@ module DbdDataEngine
       today = Date.today
       {'context:visibility' => 'personal',
        'context:encryption' => 'encrypted',
-       'context:license' => "All rights resserved, Copyright #{today.year} Peter Vandenabeele",
+       'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
        'dc:source' => 'manual by Peter Vandenabeele',
        'dc:creator' => 'Peter Vandenabeele',
        'dcterms:created' => today.to_s}
@@ -53,7 +53,7 @@ module DbdDataEngine
       today = Date.today
       {'context:visibility' => 'business',
        'context:encryption' => 'encrypted',
-       'context:license' => "All rights resserved, Copyright #{today.year} Peter Vandenabeele",
+       'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
        'dc:source' => 'manual by Peter Vandenabeele',
        'dc:creator' => 'Peter Vandenabeele',
        'dcterms:created' => today.to_s}
