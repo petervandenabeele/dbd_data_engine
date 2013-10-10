@@ -32,8 +32,10 @@ module DbdDataEngine
       if current_graph
         # the first occurrence is OK (no drama if multiple)
         contexts(current_graph).detect do |context|
-          single_fact_on_predicate(context, 'context:visibility').object == visibility(context_param) &&
-          single_fact_on_predicate(context, 'dcterms:created').object == today.to_s
+          (cv = single_fact_on_predicate(context, 'context:visibility')) &&
+          cv.object == visibility(context_param) &&
+          (dc = single_fact_on_predicate(context, 'dcterms:created')) &&
+          dc.object == today.to_s
         end
       end
     end

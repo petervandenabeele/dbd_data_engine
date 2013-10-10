@@ -9,7 +9,12 @@ module DbdDataEngine
 
     context 'default context does not yet exist' do
 
-      let(:current_graph) { Dbd::Graph.new }
+      let(:current_graph) do
+        Dbd::Graph.new << Dbd::ContextFact.new(
+          subject: Dbd::ContextFact.factory.new_subject,
+          predicate: 'foo',
+          object: 'bar')
+      end
 
       context 'default_from_params' do
         it 'returns public_today' do
