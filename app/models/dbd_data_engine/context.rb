@@ -29,6 +29,19 @@ module DbdDataEngine
       end
     end
 
+    def self.default_from_params(context_param)
+      case context_param
+        when 'public today'
+          public_today
+        when 'personal today'
+          personal_today
+        when 'business today'
+          business_today
+        else
+          raise "A context must be given (was given: #{context_param})"
+      end
+    end
+
     def self.public_today_context_facts
       today = Date.today
       {'context:visibility' => 'public',

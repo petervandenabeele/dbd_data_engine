@@ -11,6 +11,31 @@ module DbdDataEngine
        'dc:creator',
        'dcterms:created']}
 
+    def assert_object(context, object)
+      context.select{ |cf| cf.object.to_s == object }.size.should == 1
+    end
+
+    context 'default_from_params' do
+      it 'returns public_today' do
+        context = described_class.default_from_params('public today')
+        assert_object(context, 'public')
+      end
+
+      it 'returns personal_today' do
+        context = described_class.default_from_params('personal today')
+        assert_object(context, 'personal')
+      end
+
+      it 'returns business_today' do
+        context = described_class.default_from_params('business today')
+        assert_object(context, 'business')
+      end
+
+      it 'raises for inexisting param' do
+        lambda{ described_class.default_from_params('foo') }.should raise_error(/foo/)
+      end
+    end
+
     context 'public_today' do
 
       let(:context) { described_class.public_today}
@@ -24,7 +49,7 @@ module DbdDataEngine
       end
 
       it 'has a public object' do
-        context.select{ |cf| cf.object.to_s == 'public' }.size.should == 1
+        assert_object(context, 'public')
       end
     end
 
@@ -41,7 +66,7 @@ module DbdDataEngine
       end
 
       it 'has a personal object' do
-        context.select{ |cf| cf.object.to_s == 'personal' }.size.should == 1
+        assert_object(context, 'personal')
       end
     end
 
@@ -57,8 +82,8 @@ module DbdDataEngine
         context.select{ |cf| cf.class == Dbd::ContextFact}.size.should == 6
       end
 
-      it 'has a personal object' do
-        context.select{ |cf| cf.object.to_s == 'business' }.size.should == 1
+      it 'has a business object' do
+        assert_object(context, 'business')
       end
     end
   end

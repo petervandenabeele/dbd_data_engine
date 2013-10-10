@@ -16,7 +16,7 @@ module DbdDataEngine
 
     def create
       graph = Dbd::Graph.new
-      @context = context_from_params
+      @context = Context.default_from_params(params[:context])
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
         fact = Dbd::Fact.new(predicate: predicate,
@@ -34,19 +34,6 @@ module DbdDataEngine
 
     def filename
       DbdDataEngine.default_CSV_location
-    end
-
-    def context_from_params
-      case params[:context]
-        when 'public today'
-          Context.public_today
-        when 'personal today'
-          Context.personal_today
-        when 'business today'
-          Context.business_today
-        else
-          raise "A context must be given"
-      end
     end
   end
 end
