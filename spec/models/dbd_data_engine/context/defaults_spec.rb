@@ -3,14 +3,6 @@ require 'spec_helper'
 module DbdDataEngine
   describe Context do
 
-    let(:context_predicates) {
-      ['context:visibility',
-       'context:encryption',
-       'context:license',
-       'dc:source',
-       'dc:creator',
-       'dcterms:created']}
-
     def assert_object(context, object)
       context.select{ |cf| cf.object.to_s == object }.size.should == 1
     end
@@ -40,7 +32,7 @@ module DbdDataEngine
 
       context 'public_today' do
 
-        let(:context) { described_class.public_today}
+        let(:context) { described_class.public_today }
 
         it 'exists' do
           context
@@ -57,7 +49,7 @@ module DbdDataEngine
 
       context 'personal_today' do
 
-        let(:context) { described_class.personal_today}
+        let(:context) { described_class.personal_today }
 
         it "exists" do
           context
@@ -74,7 +66,7 @@ module DbdDataEngine
 
       context 'business_today' do
 
-        let(:context) { described_class.business_today}
+        let(:context) { described_class.business_today }
 
         it "exists" do
           context
