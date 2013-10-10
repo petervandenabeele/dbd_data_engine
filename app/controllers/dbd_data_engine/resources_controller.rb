@@ -19,11 +19,11 @@ module DbdDataEngine
       @context = Context.default_from_params(params[:context])
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
-        fact = Dbd::Fact.new(predicate: predicate,
-                             object:    object)
+        fact = Dbd::Fact.new(predicate: predicate, object:    object)
         @resource << fact
       end
       graph << @context << @resource
+      # TODO this can probably move to Dbd::Graph#append_to_file(filename)
       new_data = graph.to_CSV
       File.open(filename, 'a') do |f|
         f.syswrite new_data
