@@ -1,4 +1,6 @@
 %h1 Contexts#index
 
+=render partial: 'dbd_data_engine/shared/links'
+
 - @contexts.each do |context|
   = render partial: 'context', object: context

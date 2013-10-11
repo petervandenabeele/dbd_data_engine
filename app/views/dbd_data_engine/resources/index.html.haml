@@ -1,4 +1,6 @@
 %h1 Resources#index
 
+=render partial: 'dbd_data_engine/shared/links'
+
 - @resources.each do |resource|
   = render partial: 'resource', object: resource
