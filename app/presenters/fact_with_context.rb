@@ -8,8 +8,7 @@ class FactWithContext
 
   def context_summary
     context = @graph.by_subject(@fact.context_subject)
-    context_presenter = ContextPresenter.new(context: context)
-    context_presenter.context_summary
+    ContextPresenter.new(context: context).context_summary
   end
 
 end
