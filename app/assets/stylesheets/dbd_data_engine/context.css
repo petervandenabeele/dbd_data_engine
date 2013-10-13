@@ -1,11 +1,17 @@
 .context table {
-    margin: 5px;
-    border: 1px solid darkblue;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    border: 1px solid darkgray;
     color: darkblue;
     border-collapse:collapse;
 }
 
 .context td {
     padding: 3px;
-    border: 1px dotted darkblue;
+    border: 1px dotted darkgray;
+}
+
+.context_color{
+    color: darkblue;
 }
