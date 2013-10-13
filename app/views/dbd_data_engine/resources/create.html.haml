@@ -4,12 +4,12 @@
 
 %h3 context:
 %p
-  =render partial: 'dbd_data_engine/contexts/context', object: @context.to_a
+  =render partial: 'dbd_data_engine/contexts/context', object: @context
 
 %h3 resource:
 %table
   %tr
     %th predicate
     %th object
-  =render partial: 'fact', collection: @resource.to_a
+  =render partial: 'fact_with_context', collection: @resource.map{ |fact| { fact: fact} }
 

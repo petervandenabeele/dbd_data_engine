@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/resources/index.html.haml' do
 
-  let(:resources) { [:foo] }
+  let(:resources_with_context) { [{fact: 'foo', context_summary: 'public 2013-10-12'}] }
 
-  before(:each) { @resources = resources }
+  before(:each) { @resources_with_context = resources_with_context }
 
   it 'renders' do
     render
   end
 
   it 'renders the resource partial' do
-    render.should render_template(partial: '_resource')
+    render.should render_template(partial: '_resource_with_contexts')
   end
 
   it 'renders the div class resource' do

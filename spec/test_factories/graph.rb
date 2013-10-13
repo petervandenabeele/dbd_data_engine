@@ -4,12 +4,6 @@ module TestFactories
       ::Dbd::Graph
     end
 
-    def self.full
-      context = TestFactories::Context.context
-      resource = TestFactories::Resource.facts_resource(context.subject)
-      factory_for.new << context << resource
-    end
-
     def self.new_subject
       Dbd::Fact.factory.new_subject
     end

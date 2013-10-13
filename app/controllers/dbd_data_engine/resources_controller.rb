@@ -3,7 +3,7 @@ require_dependency "dbd_data_engine/application_controller"
 module DbdDataEngine
   class ResourcesController < ApplicationController
     def index
-      @resources =  resources(current_graph)
+      @resources_with_context = resources_with_context(current_graph)
     end
 
     def new
@@ -41,6 +41,14 @@ module DbdDataEngine
     # TODO move this to the Dbd::Graph#resources
     def resources(graph)
       graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
+    end
+
+    def resources_with_context(graph)
+      resources(graph).map do |resource|
+        resource.map do |fact|
+          {fact: fact}
+        end
+      end
     end
   end
 end

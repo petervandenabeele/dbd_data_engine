@@ -27,7 +27,7 @@ module DbdDataEngine
           expect(page).to have_text('Resources')
         end
 
-        it 'does not show Contexts (alleen Facts)' do
+        it 'does not show Contexts (only Facts)' do
           expect(page).to_not have_text('foobar')
           expect(page).to_not have_text('tuxping')
         end
