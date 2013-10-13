@@ -1,9 +1,9 @@
-require_dependency "dbd_data_engine/application_controller"
+require_dependency 'dbd_data_engine/application_controller'
 
 module DbdDataEngine
   class ResourcesController < ApplicationController
     def index
-      @resources_with_context = resources_with_context(current_graph)
+      @resources_with_contexts = resources_with_contexts(current_graph)
     end
 
     def new
@@ -15,12 +15,12 @@ module DbdDataEngine
       @context = Context.default_from_params(params[:context], current_graph)
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
-        fact = Dbd::Fact.new(predicate: predicate, object:    object)
-        @resource << fact
+        @resource << Dbd::Fact.new(predicate: predicate, object: object)
       end
       append_graph = Dbd::Graph.new
       append_graph << @context unless @context.first.time_stamp # only if not yet persisted?
       append_graph << @resource
+      @resources_with_contexts = resources_with_contexts(append_graph)
       # TODO this can probably move to Dbd::Graph#append_to_file(filename)
       append_csv = append_graph.to_CSV
       File.open(filename, 'a') do |f|
@@ -43,11 +43,11 @@ module DbdDataEngine
       graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
     end
 
-    def resources_with_context(graph)
+    def resources_with_contexts(graph)
       resources(graph).map do |resource|
-        resource.map do |fact|
-          {fact: fact}
-        end
+        ResourceWithContexts.new(
+          resource: resource,
+          graph: graph)
       end
     end
   end

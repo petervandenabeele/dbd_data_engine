@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/resources/index.html.haml' do
 
-  let(:resources_with_context) { [{fact: 'foo', context_summary: 'public 2013-10-12'}] }
+  let(:resources_with_contexts) { [[]] }
 
-  before(:each) { @resources_with_context = resources_with_context }
+  before(:each) do
+    assign(:resources_with_contexts, resources_with_contexts)
+  end
 
   it 'renders' do
     render

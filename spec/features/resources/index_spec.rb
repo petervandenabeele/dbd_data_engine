@@ -28,8 +28,7 @@ module DbdDataEngine
         end
 
         it 'does not show Contexts (only Facts)' do
-          expect(page).to_not have_text('foobar')
-          expect(page).to_not have_text('tuxping')
+          expect(page).to_not have_text('context:visibility')
         end
 
         it 'shows a test resource' do
