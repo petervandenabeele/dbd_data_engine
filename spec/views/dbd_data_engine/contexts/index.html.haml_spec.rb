@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/contexts/index.html.haml' do
 
-  before(:each) { assign(:contexts, [1]) }
+  let(:stub_fact) { OpenStruct.new(predicate: 'a', object: 'b') }
+
+  before(:each) { assign(:contexts, [[stub_fact]]) }
 
   it 'renders' do
     render
