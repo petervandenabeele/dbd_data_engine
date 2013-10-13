@@ -17,5 +17,15 @@ describe FactWithContext do
     it '#context_summary should be based on visibility and created date' do
       fact_with_context.context_summary.should == 'public 2013-10-13'
     end
+
+    context 'raises when new is not given all arguments' do
+      it 'without fact' do
+        lambda{ described_class.new(graph: graph) }.should raise_error
+      end
+
+      it 'without graph' do
+        lambda{ described_class.new(fact: graph.last) }.should raise_error
+      end
+    end
   end
 end
