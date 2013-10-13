@@ -7,6 +7,7 @@ guard 'rspec', :all_on_start => true, :all_after_pass => true do
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
   watch(%r{^app/(.*)(\.erb|\.haml)$})                 { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
   watch(%r{^app/models/(.*)\.rb$})                    { |m| "spec/models/#{m[1]}" }
+  watch(%r{^app/presenters/(.*)\.rb$})                { |m| "spec/presenters/#{m[1]}" }
   watch(%r{^app/controllers/dbd_data_engine/(.+)_(controller)\.rb$})  do |m|
     ["spec/routing/#{m[1]}_routing_spec.rb",
      "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb",
