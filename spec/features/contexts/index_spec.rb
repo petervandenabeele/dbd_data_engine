@@ -28,8 +28,8 @@ module DbdDataEngine
         end
 
         it 'shows a test context' do
-          expect(page).to have_text('foobar')
-          expect(page).to have_text('tuxping')
+          expect(page).to have_text('context:visibility')
+          expect(page).to have_text('public')
         end
 
         it 'does not show Facts (only Contexts)' do
