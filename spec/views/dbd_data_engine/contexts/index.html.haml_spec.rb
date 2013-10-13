@@ -2,9 +2,7 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/contexts/index.html.haml' do
 
-  let(:contexts) { [:foo] }
-
-  before(:each) { @contexts = contexts }
+  before(:each) { assign(:contexts, [1]) }
 
   it 'renders' do
     render

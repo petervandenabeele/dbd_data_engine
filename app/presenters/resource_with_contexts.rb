@@ -2,10 +2,8 @@ class ResourceWithContexts
   include Enumerable
 
   def initialize(options)
-    @resource = options[:resource]
-    @graph = options[:graph]
-    raise 'resource: is a required option' unless @resource
-    raise 'graph: is a required option' unless @graph
+    @resource = options.fetch(:resource)
+    @graph = options.fetch(:graph)
   end
 
   def each

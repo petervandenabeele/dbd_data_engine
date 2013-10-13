@@ -20,10 +20,7 @@ module DbdDataEngine
     end
 
     def self.default_from_params(context_param, current_graph)
-      if found_context = find_context(context_param, current_graph)
-        return found_context
-      end
-      create_context(context_param)
+      find_context(context_param, current_graph) || create_context(context_param)
     end
 
   private
@@ -49,7 +46,7 @@ module DbdDataEngine
         when 'business today'
           business_today
         else
-          raise "A context must be given (was given: #{context_param})"
+          raise "A valid context must be given (was given: #{context_param})"
       end
     end
 
