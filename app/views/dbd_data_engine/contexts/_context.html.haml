@@ -1,3 +1,4 @@
 %div.context
   %h3= ContextPresenter.new(context: context).context_summary
-  %table= render partial: 'dbd_data_engine/contexts/context_fact', collection: context
+  %table
+    = render partial: 'dbd_data_engine/contexts/context_fact', collection: context
