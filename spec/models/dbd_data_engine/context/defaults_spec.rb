@@ -13,6 +13,7 @@ module DbdDataEngine
         Dbd::Graph.new << Dbd::ContextFact.new(
           subject: Dbd::ContextFact.factory.new_subject,
           predicate: 'foo',
+          object_type: 's',
           object: 'bar')
       end
 

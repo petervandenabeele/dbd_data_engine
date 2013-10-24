@@ -46,26 +46,12 @@ module DbdDataEngine
             Dbd::Graph.new.from_unsorted_CSV_file(test_filename)
           end
 
-          def resources(graph)
-            filter_resources(graph, Dbd::Fact)
-          end
-
-          def contexts(graph)
-            filter_resources(graph, Dbd::ContextFact)
-          end
-
-          def filter_resources(graph, klass)
-            graph.subjects.
-                map{ |s| graph.by_subject(s) }.
-                select{ |cs| cs.first.class == klass }
-          end
-
           context 'with 1 line, creates 1 resource' do
 
             before(:each) { post(dbd_data_engine.resources_path, one_fact) }
 
             it 'adds 1 resource to the graph' do
-              resources(read_back_graph).size.should == 1
+              read_back_graph.resources.size.should == 1
             end
 
             it 'shows the result' do
@@ -83,7 +69,7 @@ module DbdDataEngine
             end
 
             it 'the 2 facts have the same subject (1 resource)' do
-              resources(read_back_graph).size.should == 1
+              read_back_graph.resources.size.should == 1
             end
 
             it 'shows the result' do
@@ -103,7 +89,7 @@ module DbdDataEngine
               end
 
               it 'adds 2 resources to the graph in the file' do
-                resources(read_back_graph).size.should == 2
+                read_back_graph.resources.size.should == 2
               end
             end
 
@@ -125,11 +111,11 @@ module DbdDataEngine
               before(:each) { post(dbd_data_engine.resources_path, one_fact) }
 
               it 'adds 1 resource to the graph' do
-                resources(read_back_graph).size.should == 1
+                read_back_graph.resources.size.should == 1
               end
 
               it 'adds 1 context to the graph' do
-                contexts(read_back_graph).size.should == 1
+                read_back_graph.contexts.size.should == 1
               end
             end
           end

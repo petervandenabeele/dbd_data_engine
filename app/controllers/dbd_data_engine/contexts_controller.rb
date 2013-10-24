@@ -5,8 +5,7 @@ module DbdDataEngine
     def index
       graph = Dbd::Graph.new
       graph = graph.from_unsorted_CSV_file(filename)
-      # TODO move this to the Dbd::Graph#contexts
-      @contexts = graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::ContextFact }
+      @contexts = graph.contexts
     end
 
     def new
@@ -18,10 +17,12 @@ module DbdDataEngine
       @context = Dbd::Context.new()
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
         context_fact = Dbd::ContextFact.new(predicate: predicate,
+                                            object_type: 's',
                                             object:    object)
         @context << context_fact
       end
       graph << @context
+      # TODO move this to graph
       new_data = graph.to_CSV
       File.open(filename, 'a') do |f|
         f.syswrite new_data

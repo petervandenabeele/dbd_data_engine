@@ -2,7 +2,7 @@ module DbdDataEngine
   class Context
 
     def self.predicates
-      resources = to_resources(::DbdOnto::Context.new)
+      resources = ::DbdOnto::Context.new.resources
       predicate_defining_resources = select_with_defines_predicate(resources)
       make_predicate_label_hash(predicate_defining_resources)
     end
@@ -28,7 +28,7 @@ module DbdDataEngine
     def self.find_context(context_param, current_graph)
       if current_graph
         # the first occurrence is OK (no drama if multiple)
-        contexts(current_graph).detect do |context|
+        current_graph.contexts.detect do |context|
           (cv = single_fact_on_predicate(context, 'context:visibility')) &&
           cv.object == visibility(context_param) &&
           (dc = single_fact_on_predicate(context, 'dcterms:created')) &&
@@ -60,59 +60,45 @@ module DbdDataEngine
 
     def self.context_from_context_facts(context_fact_array)
       Dbd::Context.new.tap do |context|
-        context_fact_array.each do |predicate, object|
-          context << Dbd::ContextFact.new(predicate: predicate, object: object)
+        context_fact_array.each do |predicate, object_type, object| # splat
+          context << Dbd::ContextFact.new(
+            predicate: predicate,
+            object_type: object_type,
+            object: object)
         end
       end
     end
 
     def self.public_today_context_facts
-      {'context:visibility' => 'public',
-       'context:encryption' => 'clear',
-       'context:license' => "CC BY, Copyright #{today.year} Peter Vandenabeele",
-       'dc:source' => 'manual by Peter Vandenabeele',
-       'dc:creator' => 'Peter Vandenabeele',
-       'dcterms:created' => today.to_s}
+      [['context:visibility','s','public'],
+       ['context:encryption','s','clear'],
+       ['context:license','s',"CC BY, Copyright #{today.year} Peter Vandenabeele"]] +
+        common_today_context_facts
     end
 
     def self.personal_today_context_facts
-      {'context:visibility' => 'personal',
-       'context:encryption' => 'encrypted',
-       'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
-       'dc:source' => 'manual by Peter Vandenabeele',
-       'dc:creator' => 'Peter Vandenabeele',
-       'dcterms:created' => today.to_s}
+      [['context:visibility','s','personal']] +
+        encrypted_and_rights_reserved_and_common
     end
 
     def self.business_today_context_facts
-      {'context:visibility' => 'business',
-       'context:encryption' => 'encrypted',
-       'context:license' => "All rights reserved, Copyright #{today.year} Peter Vandenabeele",
-       'dc:source' => 'manual by Peter Vandenabeele',
-       'dc:creator' => 'Peter Vandenabeele',
-       'dcterms:created' => today.to_s}
+      [['context:visibility','s','business']] +
+        encrypted_and_rights_reserved_and_common
+    end
+
+    def self.encrypted_and_rights_reserved_and_common
+      [['context:encryption','s','encrypted'],
+       ['context:license','s',"All rights reserved, Copyright #{today.year} Peter Vandenabeele"]] +
+        common_today_context_facts
+    end
+
+    def self.common_today_context_facts
+      [['dc:source','s','manual by Peter Vandenabeele'],
+       ['dc:creator','s','Peter Vandenabeele'],
+       ['dcterms:created','s',today.to_s]]
     end
 
     # TODO implement some of these methods on Dbd gem to clean-up
-
-    def self.contexts(graph)
-      graph.subjects.
-        map do |subject|
-          graph.by_subject(subject)
-        end.
-        select do |facts|
-          facts.first.class == Dbd::ContextFact
-        end.
-        map do |facts|
-          Dbd::Context.new(subject: facts.first.subject) << facts
-        end
-    end
-
-    def self.to_resources(context)
-      context.subjects.map do |subject|
-        context.by_subject(subject)
-      end
-    end
 
     def self.select_with_defines_predicate(resources)
       resources.select do |resource|

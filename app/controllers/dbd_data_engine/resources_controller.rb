@@ -12,20 +12,34 @@ module DbdDataEngine
     end
 
     def create
+      # FIXME refactor to smaller function (green first, refactor next)
       @context = Context.default_from_params(params[:context], current_graph)
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
-        @resource << Dbd::Fact.new(predicate: predicate, object: object)
+        @resource << Dbd::Fact.new(
+          predicate: predicate,
+          object_type: 's',
+          object: object)
       end
+
+      # prepare the graph to append
       append_graph = Dbd::Graph.new
       append_graph << @context unless @context.first.time_stamp # only if not yet persisted?
       append_graph << @resource
-      @resources_with_contexts = resources_with_contexts(append_graph)
       # TODO this can probably move to Dbd::Graph#append_to_file(filename)
       append_csv = append_graph.to_CSV
       File.open(filename, 'a') do |f|
         f.syswrite append_csv
       end
+
+      # FIXME Probably makes more sense to redirect to index page
+      # FIXME Could also be fixed with passing the @context to resources_with_contexts
+      # FIXME since all facts in this new resource have same context : @context ...
+      # prepare the graph to display
+      display_graph = Dbd::Graph.new
+      display_graph << @context # always (needed for display)
+      display_graph << @resource
+      @resources_with_contexts = resources_with_contexts(display_graph)
     end
 
   private
@@ -38,13 +52,8 @@ module DbdDataEngine
       Dbd::Graph.new.from_unsorted_CSV_file(filename)
     end
 
-    # TODO move this to the Dbd::Graph#resources
-    def resources(graph)
-      graph.subjects.map{ |s| graph.by_subject(s) }.select{ |cs| cs.first.class == Dbd::Fact }
-    end
-
     def resources_with_contexts(graph)
-      resources(graph).map do |resource|
+      graph.resources.map do |resource|
         ResourceWithContexts.new(
           resource: resource,
           graph: graph)

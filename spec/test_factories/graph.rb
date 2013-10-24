@@ -14,15 +14,18 @@ module TestFactories
         visibility_context_fact = Dbd::ContextFact.new(
           subject: context_subject,
           predicate: 'context:visibility',
+          object_type: 's',
           object: 'public')
         created_context_fact = Dbd::ContextFact.new(
           subject: context_subject,
           predicate: 'dcterms:created',
+          object_type: 's',
           object: '2013-10-13')
         fact = Dbd::Fact.new(
           subject: new_subject,
           context_subject: context_subject,
           predicate: 'fact_predicate',
+          object_type: 's',
           object: 'whooha')
         graph << visibility_context_fact << created_context_fact << fact
       end
