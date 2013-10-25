@@ -2,6 +2,7 @@ require_dependency 'dbd_data_engine/application_controller'
 
 module DbdDataEngine
   class ResourcesController < ApplicationController
+
     def index
       @resources_with_contexts = resources_with_contexts(current_graph)
     end
