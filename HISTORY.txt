@@ -26,3 +26,10 @@
 * add a naive DbdDataEngine::Context model
 * add a naive ContextsController
 * it takes the predicates for the "new" screen from DbdOnto::Context
+
+0.0.6 (2013-10-25)
+=====
+
+* upgrade to dbd 0.1.0
+* stylsheets
+* default contexts ("public today" etc.)
