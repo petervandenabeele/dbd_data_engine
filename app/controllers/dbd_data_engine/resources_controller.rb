@@ -33,14 +33,7 @@ module DbdDataEngine
         f.syswrite append_csv
       end
 
-      # FIXME Probably makes more sense to redirect to index page
-      # FIXME Could also be fixed with passing the @context to resources_with_contexts
-      # FIXME since all facts in this new resource have same context : @context ...
-      # prepare the graph to display
-      display_graph = Dbd::Graph.new
-      display_graph << @context # always (needed for display)
-      display_graph << @resource
-      @resources_with_contexts = resources_with_contexts(display_graph)
+      redirect_to('/data/resources')
     end
 
   private

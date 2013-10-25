@@ -54,9 +54,8 @@ module DbdDataEngine
               read_back_graph.resources.size.should == 1
             end
 
-            it 'shows the result' do
-              expect(response.body).to include('schema:givenName')
-              expect(response.body).to include('Peter')
+            it 'redirects to resources' do
+              expect(response).to redirect_to('/data/resources')
             end
           end
 
@@ -71,13 +70,6 @@ module DbdDataEngine
             it 'the 2 facts have the same subject (1 resource)' do
               read_back_graph.resources.size.should == 1
             end
-
-            it 'shows the result' do
-              expect(response.body).to include('schema:givenName')
-              expect(response.body).to include('Peter')
-              expect(response.body).to include('schema:familyName')
-              expect(response.body).to include('Vandenabeele')
-            end
           end
 
           context 'with 2 submits of 2 lines, creates 2 resources' do
@@ -91,17 +83,6 @@ module DbdDataEngine
               it 'adds 2 resources to the graph in the file' do
                 read_back_graph.resources.size.should == 2
               end
-            end
-
-            it 'shows the results for each submit' do
-              post(dbd_data_engine.resources_path, two_facts)
-              expect(response.body).to include('schema:givenName')
-              expect(response.body).to include('Peter')
-              expect(response.body).to include('schema:familyName')
-              expect(response.body).to include('Vandenabeele')
-              post(dbd_data_engine.resources_path, two_other_facts)
-              expect(response.body).to include('Frans')
-              expect(response.body).to include('VDA')
             end
           end
 
