@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_dependency 'rails', '>= 4.0.1.rc3'
   s.add_dependency 'haml'
-  s.add_dependency 'dbd', '~> 0.1.0'
+  s.add_dependency 'dbd', '~> 0.1.3'
   s.add_dependency 'dbd_onto', '~> 0.0.12'
 
   s.add_development_dependency 'haml-rails'

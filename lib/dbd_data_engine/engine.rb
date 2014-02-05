@@ -10,7 +10,11 @@ module DbdDataEngine
     end
   end
 
+  def self.default_data_dir
+    'data/real_data'
+  end
+
   def self.default_CSV_location
-    'data/graph.csv'
+    "#(default_data_dir}/graph.csv"
   end
 end

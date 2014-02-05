@@ -9,6 +9,7 @@ spec/dummy/.sass-cache
 Gemfile.lock
 /.idea
 /tmp
-/data/graph.csv
-/data/test_graph.csv
-/spec/dummy/data/graph.csv
+/data/real_data/graph.csv
+/data/real_data/test_graph.csv
+/spec/dummy/data/real_data/graph.csv
+/spec/dummy/data/real_data/test_graph.csv
