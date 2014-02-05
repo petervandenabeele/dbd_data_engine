@@ -33,3 +33,9 @@
 * upgrade to dbd 0.1.0
 * stylsheets
 * default contexts ("public today" etc.)
+
+0.0.7 (2014-02-05)
+=====
+
+* use a ../data/real_data/ dir for the data and the temp files
+  (allows to symlink to an encrypted directory)
