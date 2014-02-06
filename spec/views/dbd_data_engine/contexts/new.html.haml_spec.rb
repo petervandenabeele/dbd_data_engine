@@ -21,16 +21,10 @@ describe 'dbd_data_engine/contexts/new.html.haml' do
     end
 
     it 'has an array of fields with predicates' do
-      puts "AAA"
-      puts @predicates.inspect
-      puts "BBB"
       rendered.should have_field('predicate[]')
     end
 
     it 'has a field with a predicate context:visibility' do
-      puts "CCC"
-      puts @predicates.inspect
-      puts "DDD"
       rendered.should have_field('predicate[]', with: 'context:visibility')
     end
 

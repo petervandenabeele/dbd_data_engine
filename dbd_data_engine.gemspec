@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'rake'
-  s.add_dependency 'rails', '>= 4.0.1.rc3'
+  s.add_dependency 'rails', '>= 4.0.2'
   s.add_dependency 'haml'
   s.add_dependency 'dbd', '~> 0.1.3'
   s.add_dependency 'dbd_onto', '~> 0.0.12'
@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'terminal-notifier-guard'
-  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara', '~> 2.1.0'
 end
