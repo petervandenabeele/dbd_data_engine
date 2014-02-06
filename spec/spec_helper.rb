@@ -15,3 +15,7 @@ RSpec.configure do |config|
 
   config.order = 'random'
 end
+
+Capybara.configure do |config|
+  config.ignore_hidden_elements = false
+end

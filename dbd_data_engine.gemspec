@@ -30,5 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'guard-rspec'
   s.add_development_dependency 'terminal-notifier-guard'
-  s.add_development_dependency 'capybara', '~> 2.1.0'
+  s.add_development_dependency 'capybara'
 end
