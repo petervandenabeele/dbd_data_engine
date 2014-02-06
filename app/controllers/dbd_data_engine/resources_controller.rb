@@ -9,7 +9,7 @@ module DbdDataEngine
 
     def new
       @contexts = ['public today', 'personal today', 'business today']
-      @predicates = ['schema:givenName','schema:familyName']
+      @predicates = predicates_for_new
     end
 
     def create
@@ -52,6 +52,10 @@ module DbdDataEngine
           resource: resource,
           graph: graph)
       end
+    end
+
+    def predicates_for_new
+      ['schema:givenName','schema:familyName']
     end
   end
 end
