@@ -44,3 +44,9 @@
 =====
 
 * fix a bug in default_CSV_location
+
+0.0.9 (2014-02-06)
+=====
+
+* lock Capybara config.ignore_hidden_elements = false because this
+  now failed to find hidden fields
