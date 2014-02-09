@@ -41,6 +41,10 @@ module DbdDataEngine
           it 'has a select box for the context' do
             expect(page).to have_select('context', [])
           end
+
+          it 'has an option "public today"' do
+            expect(page).to have_css('select#context > option[value="public today"]')
+          end
         end
       end
     end
