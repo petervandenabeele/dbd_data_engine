@@ -1,6 +1,8 @@
 module DbdDataEngine
   class Context
 
+    extend ::DbdDataEngine::ResourceSelectors
+
     def self.predicates
       resources = ::DbdOnto::Context.new.resources
       predicate_defining_resources = select_with_defines_predicate(resources)
@@ -98,27 +100,5 @@ module DbdDataEngine
        ['dcterms:created','s',today.to_s]]
     end
 
-    # TODO implement some of these methods on Dbd gem to clean-up
-
-    def self.select_with_defines_predicate(resources)
-      resources.select do |resource|
-        single_fact_on_predicate(resource, 'meta:defines_predicate')
-      end
-    end
-
-    def self.make_predicate_label_hash(resources)
-      resources.map do |resource|
-        predicate = single_fact_on_predicate(resource, 'meta:defines_predicate').object
-        label = single_fact_on_predicate(resource, 'rdfs:label').object
-        { predicate: predicate,
-          label: label }
-      end
-    end
-
-    def self.single_fact_on_predicate(resource, predicate)
-      resource.select do |fact|
-        fact.predicate == predicate
-      end.single
-    end
   end
 end
