@@ -9,7 +9,7 @@ module DbdDataEngine
 
     def new
       @contexts = ['public today', 'personal today', 'business today']
-      @predicates = predicates_for_new
+      @predicates = Resource.used_predicates.map{ |predicate| predicate[:predicate] }
     end
 
     def create
@@ -54,8 +54,5 @@ module DbdDataEngine
       end
     end
 
-    def predicates_for_new
-      ['schema:givenName','schema:familyName']
-    end
   end
 end

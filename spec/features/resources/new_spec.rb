@@ -20,12 +20,16 @@ module DbdDataEngine
             expect(page).to have_css('h1', text: 'Create a new resource')
           end
 
-          it 'has a select box array with schema:givenName as option' do
-            expect(page).to have_css('select#predicate_ > option[value="schema:givenName"]')
+          it 'has only the schema:about option (that has an U)' do
+            expect(page).to have_css('select#predicate_ > option[value="schema:about"]')
           end
 
-          it 'has a select box array with schema:familyName as option' do
-            expect(page).to have_css('select#predicate_ > option[value="schema:familyName"]')
+          it 'has a select box array with schema:givenName as option' do
+            expect(page).to_not have_css('select#predicate_ > option[value="schema:givenName"]')
+          end
+
+          it 'has a select box array with schema:familyName as option (not an U for now)' do
+            expect(page).to_not have_css('select#predicate_ > option[value="schema:familyName"]')
           end
 
           it 'has a field array' do
