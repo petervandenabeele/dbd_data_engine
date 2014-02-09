@@ -100,5 +100,14 @@ module DbdDataEngine
        ['dcterms:created','s',today.to_s]]
     end
 
+    def self.make_predicate_label_hash(resources)
+      resources.map do |resource|
+        predicate = single_fact_on_predicate(resource, 'meta:defines_predicate').object
+        label = single_fact_on_predicate(resource, 'rdfs:label').object
+        { predicate: predicate,
+          label: label }
+      end
+    end
+
   end
 end
