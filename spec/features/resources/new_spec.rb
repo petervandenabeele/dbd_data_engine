@@ -21,7 +21,11 @@ module DbdDataEngine
           end
 
           it 'has a select box array with schema:givenName as option' do
-            expect(page).to have_select('predicate[]', options: ['schema:givenName','schema:familyName'])
+            expect(page).to have_css("select option:contains('schema:givenName')")
+          end
+
+          it 'has a select box array with schema:familyName as option' do
+            expect(page).to have_css("select option:contains('schema:familyName')")
           end
 
           it 'has a field array' do
