@@ -5,7 +5,7 @@ module DbdDataEngine
     describe 'used_predicates' do
 
       let(:used_predicates) do
-        ['schema:about']
+        ['schema:about', 'schema:familyName', 'schema:givenName']
       end
 
       it 'has all the used predicates' do

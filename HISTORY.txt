@@ -50,3 +50,8 @@
 
 * lock Capybara config.ignore_hidden_elements = false because this
   now failed to find hidden fields
+
+0.0.10 (2014-02-09)
+======
+
+* Now using the new used schema predicates
