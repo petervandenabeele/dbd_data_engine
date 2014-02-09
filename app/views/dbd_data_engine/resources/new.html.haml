@@ -3,7 +3,7 @@
 = form_tag('/data/resources', method: :post) do # engine controller route not loaded in view tests
   %p
     =label_tag('Context')
-    =select_tag('context', options_for_select(@contexts)) #@contexts))
+    =select_tag('context', options_for_select(@contexts))
   %table
     %tr
       %th predicate
