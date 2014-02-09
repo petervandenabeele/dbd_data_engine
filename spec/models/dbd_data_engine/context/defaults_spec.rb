@@ -3,7 +3,7 @@ require 'spec_helper'
 module DbdDataEngine
   describe Context do
 
-    def assert_object(context, object)
+    def assert_context_has_object(context, object)
       context.select{ |cf| cf.object.to_s == object }.size.should == 1
     end
 
@@ -20,17 +20,17 @@ module DbdDataEngine
       context 'default_from_params' do
         it 'returns public_today' do
           context = described_class.default_from_params('public today', current_graph)
-          assert_object(context, 'public')
+          assert_context_has_object(context, 'public')
         end
 
         it 'returns personal_today' do
           context = described_class.default_from_params('personal today', current_graph)
-          assert_object(context, 'personal')
+          assert_context_has_object(context, 'personal')
         end
 
         it 'returns business_today' do
           context = described_class.default_from_params('business today', current_graph)
-          assert_object(context, 'business')
+          assert_context_has_object(context, 'business')
         end
 
         it 'raises for inexisting param' do
@@ -51,7 +51,7 @@ module DbdDataEngine
         end
 
         it 'has a public object' do
-          assert_object(context, 'public')
+          assert_context_has_object(context, 'public')
         end
       end
 
@@ -68,7 +68,7 @@ module DbdDataEngine
         end
 
         it 'has a personal object' do
-          assert_object(context, 'personal')
+          assert_context_has_object(context, 'personal')
         end
       end
 
@@ -85,7 +85,7 @@ module DbdDataEngine
         end
 
         it 'has a business object' do
-          assert_object(context, 'business')
+          assert_context_has_object(context, 'business')
         end
       end
     end
