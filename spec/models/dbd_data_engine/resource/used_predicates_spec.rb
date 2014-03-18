@@ -4,12 +4,15 @@ module DbdDataEngine
   describe Resource do
     describe 'used_predicates' do
 
-      let(:used_predicates) do
-        ['schema:about', 'schema:familyName', 'schema:givenName']
+      let(:example_used_predicates) do
+        ['schema:about',
+         'schema:address',
+         'schema:familyName',
+         'schema:givenName']
       end
 
       it 'has all the used predicates' do
-        described_class.used_predicates.should == used_predicates
+        expect(example_used_predicates - described_class.used_predicates).to be_empty
       end
     end
   end
