@@ -5,10 +5,10 @@ module DbdDataEngine
     describe 'used_predicates' do
 
       let(:example_used_predicates) do
-        ['schema:about',
-         'schema:address',
-         'schema:familyName',
-         'schema:givenName']
+        [['about (schema)', 'schema:about'],
+         ['address (schema)', 'schema:address'],
+         ['familyName (schema)', 'schema:familyName'],
+         ['givenName (schema)', 'schema:givenName']]
       end
 
       it 'has all the used predicates' do

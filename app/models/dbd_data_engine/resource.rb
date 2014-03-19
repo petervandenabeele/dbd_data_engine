@@ -21,6 +21,9 @@ module DbdDataEngine
     def self.extract_defines_predicate_object(resources)
       resources.map do |resource|
         single_fact_on_predicate(resource, 'meta:defines_predicate').object
+      end.map do |predicate|
+        group, detail = predicate.split(':')
+        ["#{detail} (#{group})", predicate]
       end
     end
 

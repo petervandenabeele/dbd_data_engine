@@ -5,12 +5,14 @@ describe 'dbd_data_engine/resources/new.html.haml' do
 
     before(:each) do
       @contexts = ['a', 'b']
-      @predicates = ['schema:givenName', 'schema:familyName']
+      @predicates =
+        [
+            ['about (schema)', 'schema:about'],
+            ['address (schema)', 'schema:address'],
+            ['familyName (schema)', 'schema:familyName'],
+            ['givenName (schema)', 'schema:givenName'],
+        ]
       render
-    end
-
-    it 'without exceptions' do
-      #should_not raise_error
     end
 
     it 'has table header "predicate"' do
@@ -22,7 +24,15 @@ describe 'dbd_data_engine/resources/new.html.haml' do
     end
 
     it 'has an array of drop down select boxes with predicates' do
-      rendered.should have_select('predicate[]', options: ['schema:givenName', 'schema:familyName'])
+      rendered.should have_select('predicate[]',
+        options:
+          [
+            'about (schema)',
+            'address (schema)',
+            'familyName (schema)',
+            'givenName (schema)',
+          ]
+      )
     end
 
     it 'has a select box with contexts' do
