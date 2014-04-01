@@ -14,6 +14,8 @@ RSpec.configure do |config|
   config.filter_run :focus
 
   config.order = 'random'
+
+
 end
 
 Capybara.configure do |config|

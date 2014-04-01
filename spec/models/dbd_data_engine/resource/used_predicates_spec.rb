@@ -4,6 +4,10 @@ module DbdDataEngine
   describe Resource do
     describe 'used_predicates' do
 
+      before(:each) do
+        stub_data_files
+      end
+
       let(:example_used_predicates) do
         [['about (schema)', 'schema:about'],
          ['address (schema)', 'schema:address'],
