@@ -4,13 +4,23 @@ module DbdDataEngine
     extend ::DbdDataEngine::ResourceSelectors
 
     def self.used_predicates
-      resources = ::DbdOnto::Schema.new.resources
+      schema_resources = ::DbdOnto::Schema.new.resources
+      dbd_resources = current_graph.resources
+      resources = schema_resources + dbd_resources
       predicate_defining_resources = select_with_defines_predicate(resources)
       used_predicate_defining_resources = select_used(predicate_defining_resources)
       extract_defines_predicate_object(used_predicate_defining_resources)
     end
 
   private
+
+    def self.filename
+      DbdDataEngine.default_CSV_location
+    end
+
+    def self.current_graph
+      Dbd::Graph.new.from_unsorted_CSV_file(filename)
+    end
 
     def self.select_used(resources)
       resources.select do |resource|
