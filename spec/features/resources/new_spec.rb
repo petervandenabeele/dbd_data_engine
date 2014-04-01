@@ -12,7 +12,7 @@ module DbdDataEngine
       context 'page content' do
 
         before(:each) do
-          stub_data_files
+          stub_real_data_dir
           visit(dbd_data_engine.new_resource_path)
         end
 

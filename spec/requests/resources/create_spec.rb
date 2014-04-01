@@ -11,7 +11,10 @@ module DbdDataEngine
 
       context 'creating the resource from parameters' do
 
-        let(:test_filename) { "#{DbdDataEngine.default_data_dir}/test_graph.csv" }
+        let(:test_filename) do
+          stub_real_data_dir
+          "#{DbdDataEngine.default_data_dir}/test_graph.csv"
+        end
 
         let(:one_fact) do
           {'predicate' => ['schema:givenName'],
@@ -31,9 +34,10 @@ module DbdDataEngine
            'context' => 'personal today'}
         end
 
-        before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
-
         describe 'with correct parameters' do
+
+          before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
+
           it 'with correct data does_not raise_error' do
             post(dbd_data_engine.resources_path, one_fact)
           end

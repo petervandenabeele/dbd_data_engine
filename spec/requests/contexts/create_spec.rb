@@ -11,7 +11,10 @@ module DbdDataEngine
 
       context 'creating the resource from parameters' do
 
-        let(:test_filename) { "#{DbdDataEngine.default_data_dir}/test_graph.csv" }
+        let(:test_filename) do
+          stub_real_data_dir
+          "#{DbdDataEngine.default_data_dir}/test_graph.csv"
+        end
 
         let(:one_fact) do
           {'predicate' => ['schema:givenName'],

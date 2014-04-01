@@ -5,7 +5,7 @@ module DbdDataEngine
     describe 'used_predicates' do
 
       before(:each) do
-        stub_data_files
+        stub_real_data_dir
       end
 
       let(:example_used_predicates) do
