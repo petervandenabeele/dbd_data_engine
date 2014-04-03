@@ -5,8 +5,11 @@ module DbdDataEngine
 
     def self.used_predicates
       schema_resources = ::DbdOnto::Schema.new.resources
+      meta_resources = ::DbdOnto::Meta.new.resources
       dbd_resources = current_graph.resources
-      resources = schema_resources + dbd_resources
+      resources = schema_resources +
+                  meta_resources +
+                  dbd_resources
       predicate_defining_resources = select_with_defines_predicate(resources)
       used_predicate_defining_resources = select_used(predicate_defining_resources)
       extract_defines_predicate_object(used_predicate_defining_resources)
@@ -24,7 +27,9 @@ module DbdDataEngine
 
     def self.select_used(resources)
       resources.select do |resource|
-        single_fact_on_predicate(resource, 'meta:predicate_used')
+        single_fact_on_predicate(resource, 'meta:predicate_used') ||
+        # hack ... all predicates from Meta ontology always used
+        single_fact_on_predicate(resource, 'meta:defines_predicate').object.start_with?('meta:')
       end
     end
 
