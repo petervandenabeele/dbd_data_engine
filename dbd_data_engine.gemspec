@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 4.0.2'
   s.add_dependency 'haml'
   s.add_dependency 'dbd', '~> 0.1.3'
-  s.add_dependency 'dbd_onto', '~> 0.0.13'
+  s.add_dependency 'dbd_onto', '~> 0.0.15'
 
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'

@@ -10,12 +10,13 @@ module DbdDataEngine
 
       let(:example_used_predicates) do
         [
+          ['defines_predicate (meta)', 'meta:defines_predicate'],
+          ['predicate_used (meta)', 'meta:predicate_used'],
+          ['type (rdf)', 'rdf:type'],
           ['about (schema)', 'schema:about'],
           ['address (schema)', 'schema:address'],
           ['familyName (schema)', 'schema:familyName'],
           ['givenName (schema)', 'schema:givenName'],
-          ['defines_predicate (meta)', 'meta:defines_predicate'],
-          ['predicate_used (meta)', 'meta:predicate_used'],
         ]
       end
 
