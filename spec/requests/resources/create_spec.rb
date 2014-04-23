@@ -13,7 +13,7 @@ module DbdDataEngine
 
         let(:test_filename) do
           stub_real_data_dir
-          "#{DbdDataEngine.default_data_dir}/test_graph.csv"
+          DbdDataEngine.default_CSV_location
         end
 
         let(:one_fact) do
@@ -35,8 +35,6 @@ module DbdDataEngine
         end
 
         describe 'with correct parameters' do
-
-          before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
 
           it 'with correct data does_not raise_error' do
             post(dbd_data_engine.resources_path, one_fact)

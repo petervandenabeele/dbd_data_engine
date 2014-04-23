@@ -17,6 +17,7 @@ module DbdDataEngine
           ['address (schema)', 'schema:address'],
           ['familyName (schema)', 'schema:familyName'],
           ['givenName (schema)', 'schema:givenName'],
+          #['test (dbd)', 'dbd:test'],
         ]
       end
 

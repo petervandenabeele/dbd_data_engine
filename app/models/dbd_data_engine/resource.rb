@@ -3,6 +3,8 @@ module DbdDataEngine
 
     extend ::DbdDataEngine::ResourceSelectors
 
+    # TODO test the dbd_resources
+    # TODO fix the hack below (add meta to used)
     def self.used_predicates
       meta_resources = ::DbdOnto::Meta.new.resources
       rdf_resources = ::DbdOnto::Rdf.new.resources

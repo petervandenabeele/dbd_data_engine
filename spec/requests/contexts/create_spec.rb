@@ -13,7 +13,7 @@ module DbdDataEngine
 
         let(:test_filename) do
           stub_real_data_dir
-          "#{DbdDataEngine.default_data_dir}/test_graph.csv"
+          DbdDataEngine.default_CSV_location
         end
 
         let(:one_fact) do
@@ -30,8 +30,6 @@ module DbdDataEngine
           {'predicate' => ['schema:givenName', 'schema:familyName'],
            'object' => ['Frans', 'VDA']}
         end
-
-        before(:each) { DbdDataEngine.stub(:default_CSV_location).and_return(test_filename) }
 
         describe 'with correct parameters' do
           it 'with correct data does_not raise_error' do
