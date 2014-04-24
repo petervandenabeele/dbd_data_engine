@@ -14,11 +14,6 @@ RSpec.configure do |config|
   config.filter_run :focus
 
   config.order = 'random'
-
-  config.before(:suite) do
-    stub_real_data_dir
-    File.open(DbdDataEngine.default_CSV_location, "w") {}
-  end
 end
 
 Capybara.configure do |config|
