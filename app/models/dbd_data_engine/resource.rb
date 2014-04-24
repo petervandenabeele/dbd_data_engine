@@ -3,7 +3,6 @@ module DbdDataEngine
 
     extend ::DbdDataEngine::ResourceSelectors
 
-    # TODO fix the hack below (add meta to used)
     def self.used_predicates
       meta_resources = ::DbdOnto::Meta.new.resources
       rdf_resources = ::DbdOnto::Rdf.new.resources
@@ -31,9 +30,7 @@ module DbdDataEngine
 
     def self.select_used(resources)
       resources.select do |resource|
-        single_fact_on_predicate(resource, 'meta:predicate_used') ||
-        # hack ... all predicates from Meta ontology always used
-        single_fact_on_predicate(resource, 'meta:defines_predicate').object.start_with?('meta:')
+        single_fact_on_predicate(resource, 'meta:predicate_used')
       end
     end
 

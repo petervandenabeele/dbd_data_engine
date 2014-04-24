@@ -28,7 +28,7 @@ EOS
       end
 
       it 'has all the used predicates' do
-        expect(example_used_predicates - described_class.used_predicates).to be_empty
+        expect(example_used_predicates - described_class.used_predicates).to eq []
       end
     end
   end
