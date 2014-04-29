@@ -34,11 +34,13 @@ module DbdDataEngine
            'context' => 'personal today'}
         end
 
-        describe 'with correct parameters' do
+        let(:four_facts) do
+          {'predicate' => ['schema:givenName', 'schema:familyName', 'dbd:a', 'dbd:b'],
+           'object' => ['Frans', 'VDA', '', ''],
+           'context' => 'personal today'}
+        end
 
-          it 'with correct data does_not raise_error' do
-            post(dbd_data_engine.resources_path, one_fact)
-          end
+        describe 'with correct parameters' do
 
           before(:each) do
             Dbd::Graph.new.to_CSV_file(test_filename) # empty the file
@@ -49,40 +51,42 @@ module DbdDataEngine
           end
 
           context 'with 1 line, creates 1 resource' do
-
-            before(:each) { post(dbd_data_engine.resources_path, one_fact) }
-
             it 'adds 1 resource to the graph' do
+              post(dbd_data_engine.resources_path, one_fact)
               read_back_graph.resources.size.should == 1
             end
 
             it 'redirects to resources' do
+              post(dbd_data_engine.resources_path, one_fact)
               expect(response).to redirect_to('/data/resources')
             end
           end
 
           context 'with 2 lines, creates resource with 2 facts' do
-
-            before(:each) { post(dbd_data_engine.resources_path, two_facts) }
-
             it 'adds 2 lines to the graph' do
+              post(dbd_data_engine.resources_path, two_facts)
               read_back_graph.size.should == 8
             end
 
             it 'the 2 facts have the same subject (1 resource)' do
+              post(dbd_data_engine.resources_path, two_facts)
               read_back_graph.resources.size.should == 1
+            end
+          end
+
+          context 'with 4 lines, of which 2 active creates resource with 2 facts' do
+            it 'adds 2 lines to the graph' do
+              post(dbd_data_engine.resources_path, four_facts)
+              read_back_graph.size.should == 8
             end
           end
 
           context 'with 2 submits of 2 lines, creates 2 resources' do
             context 'submits directly after each other' do
 
-              before(:each) do
+              it 'adds 2 resources to the graph in the file' do
                 post(dbd_data_engine.resources_path, two_facts)
                 post(dbd_data_engine.resources_path, two_other_facts)
-              end
-
-              it 'adds 2 resources to the graph in the file' do
                 read_back_graph.resources.size.should == 2
               end
             end
@@ -91,13 +95,13 @@ module DbdDataEngine
           context 'with a context, finds or creates and uses that context' do
             context 'context did not yet exist' do
 
-              before(:each) { post(dbd_data_engine.resources_path, one_fact) }
-
               it 'adds 1 resource to the graph' do
+                post(dbd_data_engine.resources_path, one_fact)
                 read_back_graph.resources.size.should == 1
               end
 
               it 'adds 1 context to the graph' do
+                post(dbd_data_engine.resources_path, one_fact)
                 read_back_graph.contexts.size.should == 1
               end
             end
@@ -105,7 +109,9 @@ module DbdDataEngine
 
           context 'with multi-threaded requests does a clean write' do
 
-            before(:each) { pending("multi-threaded tests fail on JRuby") if RUBY_PLATFORM == 'java' }
+            before(:each) do
+              pending("multi-threaded tests fail on JRuby") if RUBY_PLATFORM == 'java'
+            end
 
             it 'does not fail on parallel access (also tested on 1000.times)' do
               threads = []

@@ -17,6 +17,7 @@ module DbdDataEngine
       @context = Context.default_from_params(params[:context], current_graph)
       @resource = Dbd::Resource.new(context_subject: @context.subject)
       [params[:predicate], params[:object]].transpose.each do |predicate, object|
+        next if object.blank?
         @resource << Dbd::Fact.new(
           predicate: predicate,
           object_type: 's',
