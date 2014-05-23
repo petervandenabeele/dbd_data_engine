@@ -1,6 +1,8 @@
 class ResourceWithContexts
   include Enumerable
 
+  attr_reader :resource
+
   def initialize(options)
     @resource = options.fetch(:resource)
     @graph = options.fetch(:graph)
