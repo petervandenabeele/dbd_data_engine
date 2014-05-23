@@ -2,11 +2,9 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/resources/_fact_with_context.html.haml' do
 
-  let(:fact_with_context) do
-    graph = TestFactories::Graph.full
-    fact = graph.last
-    FactWithContext.new(fact: fact, graph: graph)
-  end
+  let(:graph) { TestFactories::Graph.full }
+  let(:fact) {  graph.last }
+  let(:fact_with_context) { FactWithContext.new(fact: fact, graph: graph) }
 
   before(:each) do
     render 'dbd_data_engine/resources/fact_with_context', fact_with_context: fact_with_context

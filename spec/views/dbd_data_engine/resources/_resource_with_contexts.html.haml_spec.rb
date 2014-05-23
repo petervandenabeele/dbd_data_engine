@@ -2,15 +2,17 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/resources/_resource_with_contexts.html.haml' do
 
-  let(:resource_with_contexts) do
-    graph = TestFactories::Graph.full
-    fact = graph.last
-    resource = [fact]
-    ResourceWithContexts.new(resource: resource, graph: graph)
-  end
+  let(:graph) { TestFactories::Graph.full }
+  let(:resource) { graph.resources.first }
+  let(:fact) {  resource.first }
+  let(:resource_with_contexts) { ResourceWithContexts.new(resource: resource, graph: graph) }
 
   before(:each) do
     render 'dbd_data_engine/resources/resource_with_contexts', resource_with_contexts: resource_with_contexts
+  end
+
+  it 'renders the resource subject' do
+    expect(rendered).to have_css('td', text: fact.subject)
   end
 
   it 'renders the fact predicate' do

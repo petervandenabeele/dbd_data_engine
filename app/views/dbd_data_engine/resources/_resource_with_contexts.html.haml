@@ -1,3 +1,5 @@
 %div.resource
   %table
+    %tr
+      %td{colspan: 3, class: :context_color}= resource_with_contexts.resource.subject
     = render partial: 'fact_with_context', collection: resource_with_contexts.to_a

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'dbd_data_engine/resources/index.html.haml' do
 
-  let(:resources_with_contexts) { [[]] }
+  let(:resources_with_contexts) { [ResourceWithContexts.new(resource: double('resource', subject: 'foo', each: nil), graph: nil)] }
 
   before(:each) do
     assign(:resources_with_contexts, resources_with_contexts)
