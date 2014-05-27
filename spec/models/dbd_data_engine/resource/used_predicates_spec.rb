@@ -10,6 +10,7 @@ module DbdDataEngine
           f.write <<EOS
 "2014-04-23 06:14:40.852155565 UTC","00a77b19-c11b-47f2-8bdd-4e8680687832","a85012ee-b31d-4402-84bb-9db33cbadfdc","50f2d11d-8a0c-4832-bca9-9e240afc83bb","meta:defines_predicate","s","dbd:test"
 "2014-04-23 06:14:40.852176070 UTC","39b6bffa-008d-43b4-ae02-8cc4d4a9c3e2","a85012ee-b31d-4402-84bb-9db33cbadfdc","50f2d11d-8a0c-4832-bca9-9e240afc83bb","meta:predicate_used","s","true"
+"2014-05-27 18:44:40.852157565 UTC","00a77b19-c11b-47f2-8bdd-4e8680687833","a85012ee-b31d-4402-84bb-9db33cbadfdc","50f2d11d-8a0c-4832-bca9-9e240afc83bc","meta:defines_predicate","s","dbd:not_used"
 EOS
         end
       end
@@ -27,8 +28,16 @@ EOS
         ]
       end
 
+      let(:example_not_used_predicate) do
+        ['not_used (dbd)', 'dbd:not_used']
+      end
+
       it 'has all the used predicates' do
         expect(example_used_predicates - described_class.used_predicates).to eq []
+      end
+
+      it 'does not have predicates that are not predicate_used' do
+        expect(described_class.used_predicates).not_to include(example_not_used_predicate)
       end
     end
   end
