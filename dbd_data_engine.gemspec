@@ -21,11 +21,12 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'rake'
-  s.add_dependency 'rails', '= 4.0.7'
+  s.add_dependency 'rails', '= 4.1.14.1'
   s.add_dependency 'haml'
   s.add_dependency 'dbd', '~> 0.1.3'
   s.add_dependency 'dbd_onto', '~> 0.0.16'
 
+  s.add_development_dependency 'rspec', '= 2.14.1'
   s.add_development_dependency 'test-unit'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'
