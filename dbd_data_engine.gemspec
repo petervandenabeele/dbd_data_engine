@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'dbd', '~> 0.1.3'
   s.add_dependency 'dbd_onto', '~> 0.0.16'
 
+  s.add_development_dependency 'test-unit'
   s.add_development_dependency 'haml-rails'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'guard-rspec'
